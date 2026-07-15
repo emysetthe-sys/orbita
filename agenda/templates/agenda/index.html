@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Órbita - Plataforma de Agendamentos</title>
+    <style>
+        /* IMPORTAÇÃO FORÇADA DE FONTE DISPLAY ESTILO AHSING */
+        @import url('https://googleapis.com');
+
+        /* FUNDO DE VIA LÁCTEA E UNIVERSO EM ALTA DEFINIÇÃO */
+        body { 
+            font-family: 'Space Grotesk', sans-serif; 
+            background-image: linear-gradient(rgba(10, 5, 30, 0.75), rgba(2, 6, 23, 0.9)), url('https://unsplash.com');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            margin: 0; 
+            padding: 0; 
+            color: #f8fafc; 
+            min-height: 100vh;
+        }
+        
+        /* Barra de Navegação Superior Galáctica */
+        .navbar { 
+            background-color: rgba(15, 23, 42, 0.7); 
+            padding: 22px 30px; 
+            border-bottom: 2px solid rgba(59, 130, 246, 0.3); 
+            margin-bottom: 40px; 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
+        }
+        .navbar-container { max-width: 1100px; margin: auto; display: flex; align-items: center; }
+        
+        /* FONTE AJUSTADA COM O ESTILO CALIGRÁFICO MODERNO DA AHSING */
+        .brand-name { 
+            font-family: 'Syne', sans-serif;
+            color: #3b82f6; 
+            font-size: 36px; 
+            font-weight: 800; 
+            letter-spacing: -2px; 
+            text-decoration: none; 
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #60a5fa, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.6));
+        }
+        .brand-sub { color: #cbd5e1; font-size: 15px; margin-left: 18px; padding-left: 18px; border-left: 2px solid rgba(255,255,255,0.2); font-weight: 700; letter-spacing: 0.5px; }
+
+        /* Estrutura de Grid */
+        .main-container { max-width: 1100px; margin: auto; padding: 0 20px 40px 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        
+        /* Cards de Conteúdo Translúcidos (Glassmorphism) */
+        .card { 
+            background: rgba(30, 41, 59, 0.65); 
+            border-radius: 24px; 
+            overflow: hidden; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            text-align: center; 
+            padding-bottom: 25px; 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .card:hover { 
+            transform: translateY(-10px); 
+            border-color: #a855f7; 
+            box-shadow: 0 0 35px rgba(168, 85, 247, 0.35);
+        }
+        
+        /* Foto do Profissional */
+        .avatar-container { width: 100%; height: 230px; background: #090514; overflow: hidden; position: relative; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .avatar { width: 100%; height: 100%; object-fit: cover; }
+        .no-avatar { display: flex; align-items: center; justify-content: center; height: 100%; font-size: 54px; background: #1e1b4b; }
+        
+        /* Elementos de Texto */
+        .badge { background: linear-gradient(135deg, #3b82f6, #a855f7); color: white; padding: 7px 16px; border-radius: 9999px; font-size: 11px; font-weight: bold; text-transform: uppercase; display: inline-block; margin-top: -15px; position: relative; border: 2px solid #1e293b; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        h3 { margin: 22px 0 6px 0; color: #ffffff; font-size: 25px; font-weight: 700; letter-spacing: -0.5px; }
+        .bio { color: #94a3b8; font-size: 14px; padding: 0 25px; line-height: 1.6; height: 50px; overflow: hidden; text-overflow: ellipsis; }
+        
+        /* Botão Cósmico */
+        .btn { display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #a855f7); color: white; text-decoration: none; padding: 15px; border-radius: 12px; margin: 22px 25px 0 25px; font-weight: bold; font-size: 16px; transition: all 0.2s; box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3); }
+        .btn:hover { opacity: 0.95; transform: scale(1.02); box-shadow: 0 4px 30px rgba(59, 130, 246, 0.5); }
+    </style>
+</head>
+<body>
+
+    <!-- Barra de Navegação Espacial da Órbita -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="brand-name">✨ Órbita</a>
+            <span class="brand-sub">Onde profissionais e clientes se encontram!</span>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <div class="main-container">
+        <div class="grid">
+            {% for p in profissionais %}
+            <div class="card">
+                <div class="avatar-container">
+                    {% if p.foto %}
+                        <img src="{{ p.foto.url }}" alt="Foto de {{ p.nome }}" class="avatar">
+                    {% else %}
+                        <div class="no-avatar">👤</div>
+                    {% endif %}
+                </div>
+                <span class="badge">{{ p.get_nicho_display }}</span>
+                <h3>{{ p.nome }}</h3>
+                <p class="bio">{{ p.bio }}</p>
+                <a href="{% url 'perfil_profissional' p.id %}" class="btn">Explorar Agenda</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>
+
