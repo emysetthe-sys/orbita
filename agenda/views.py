@@ -2,11 +2,40 @@ from django.shortcuts import render, get_object_or_404
 from .models import Profissional, Servico, HorarioDisponivel
 import urllib.parse
 
+def home(request):
+    # Busca os profissionais e carrega a nova página inicial da Órbita
+    profissionais = Profissional.objects.all() 
+    # AJUSTADO: mudamos de professionals para profissionais no final da linha abaixo
+    return render(request, 'agenda/index.html', {'profissionais': profissionais})
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
+def login_view(request):
+    if request.method == 'POST':
+        usuario_digitado = request.POST.get('username')
+        senha_digitada = request.POST.get('password')
+        
+        # O Django tenta encontrar e validar o usuário no banco de dados
+        user = authenticate(request, username=usuario_digitado, password=senha_digitada)
+        
+        if user is not None:
+            login(request, user)
+            messages.success(request, f"Bem-vindo de volta, {user.username}!")
+            return redirect('home') # Redireciona de volta para a página inicial logado
+        else:
+            messages.error(request, "Usuário ou senha incorretos.")
+            
+    return render(request, 'agenda/login.html')
+
+
 def lista_profissionais(request):
     profissionais = Profissional.objects.all()
     return render(request, 'agenda/index.html', {'profissionais': profissionais})
 
-def perfil_profissional(request, profissional_id):
+def perfil_profissional(request, profesional_id):
     profissional = get_object_or_404(Profissional, pk=profissional_id)
     servicos = profissional.servicos.all()
     horarios = profissional.horarios.filter(disponivel=True)
@@ -29,5 +58,8 @@ def perfil_profissional(request, profissional_id):
         whatsapp_link = f"https://wa.me{profissional.whatsapp}?text={texto_codificado}"
 
     return render(request, 'agenda/perfil.html', {
-        'profissional': profissional, 'servicos': servicos, 'horarios': horarios, 'whatsapp_link': whatsapp_link
+        'profissional': profissional, 
+        'servicos': servicos, 
+        'horarios': horarios, 
+        'whatsapp_link': whatsapp_link
     })

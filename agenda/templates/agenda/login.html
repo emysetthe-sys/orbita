@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Órbita - Entrar na Conta</title>
+    <style>
+        @import url('https://googleapis.com');
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: linear-gradient(125deg, #020617 10%, #0f172a 30%, #1e1b4b 50%, #311042 75%, #4c0519 100%);
+            background-size: 400% 400%;
+            margin: 0; 
+            padding: 0; 
+            color: #f8fafc; 
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-card {
+            background: rgba(30, 41, 59, 0.45); 
+            border-radius: 24px; 
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            text-align: center;
+        }
+
+        .brand {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #1d4ed8, #a855f7, #d8b4fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 30px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(15, 23, 42, 0.6);
+            color: white;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #a855f7;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, #3b82f6, #a855f7);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.95;
+            transform: scale(1.01);
+        }
+
+        .divider {
+            margin: 25px 0;
+            display: flex;
+            align-items: center;
+            color: #64748b;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            height: 1px;
+            margin: 0 10px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .btn-google {
+            background: #ffffff;
+            color: #1f2937;
+        }
+
+        .btn-google:hover {
+            background: #f1f5f9;
+        }
+
+        .btn-facebook {
+            background: #1877f2;
+            color: white;
+        }
+
+        .btn-facebook:hover {
+            background: #166fe5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <a href="/" class="brand">✨ ÓrbitA</a>
+        
+        <!-- Bloco para exibir alertas de erro caso erre a senha -->
+        {% if messages %}
+            {% for message in messages %}
+                <div style="background: rgba(239, 68, 68, 0.2); border: 1px solid #ef4444; color: #fca5a5; padding: 10px; border-radius: 8px; margin-bottom: 20px; font-size: 14px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="POST">
+            {% csrf_token %} <!-- Correção feita: tag oficial do Django contra ataques -->
+            
+            <div class="input-group">
+                <label for="username">E-mail ou Usuário</label>
+                <input type="text" id="username" name="username" placeholder="Digite seu acesso" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Entrar na Plataforma</button>
+        </form>
+
+        <div class="divider">ou entre com</div>
+
+        <a href="{% url 'google_login' %}" class="social-btn btn-google">
+            <img src="https://adobe.com" width="18" alt="Google">
+            Entrar com o Google
+        </a>
+
+        <a href="#" class="social-btn btn-facebook">
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Entrar com o Facebook
+        </a>
+    </div>
+
+</body>
+</html>

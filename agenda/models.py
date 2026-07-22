@@ -6,6 +6,9 @@ class Profissional(models.Model):
         ('TRAN', 'Trancista'),
         ('BARB', 'Barbeiro'),
         ('EVEN', 'Produtor de Eventos'),
+        # NOVOS NICHOS ADICIONADOS ABAIXO:
+        ('NAIL', 'Nail Designer'),
+        ('SERR', 'Trio Pé de Serra'),
     ]
     nome = models.CharField(max_length=100)
     nicho = models.CharField(max_length=4, choices=NICHOS)
@@ -32,3 +35,4 @@ class HorarioDisponivel(models.Model):
 
     def __str__(self):
         return f"{self.data} às {self.hora} - {self.profissional.nome}"
+

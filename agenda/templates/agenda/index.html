@@ -4,119 +4,303 @@
     <meta charset="UTF-8">
     <title>Órbita - Plataforma de Agendamentos</title>
     <style>
-        /* IMPORTAÇÃO FORÇADA DE FONTE DISPLAY ESTILO AHSING */
+        /* IMPORTAÇÃO DAS FONTES BASE */
         @import url('https://googleapis.com');
 
-        /* FUNDO DE VIA LÁCTEA E UNIVERSO EM ALTA DEFINIÇÃO */
+        /* FUNDO GRADIENTE DINÂMICO - VIA LÁCTEA / GALÁXIA */
         body { 
-            font-family: 'Space Grotesk', sans-serif; 
-            background-image: linear-gradient(rgba(10, 5, 30, 0.75), rgba(2, 6, 23, 0.9)), url('https://unsplash.com');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: linear-gradient(125deg, #020617 10%, #0f172a 30%, #1e1b4b 50%, #311042 75%, #4c0519 100%);
+            background-size: 400% 400%;
+            animation: aurora 20s ease infinite;
             margin: 0; 
             padding: 0; 
             color: #f8fafc; 
             min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+
+        @keyframes aurora {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
-        /* Barra de Navegação Superior Galáctica */
+        /* Barra de Navegação Superior Fixa e Transparente */
         .navbar { 
-            background-color: rgba(15, 23, 42, 0.7); 
-            padding: 22px 30px; 
-            border-bottom: 2px solid rgba(59, 130, 246, 0.3); 
-            margin-bottom: 40px; 
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6); 
+            background-color: rgba(15, 23, 42, 0.45); 
+            padding: 20px 30px; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
+            box-sizing: border-box;
         }
-        .navbar-container { max-width: 1100px; margin: auto; display: flex; align-items: center; }
+        .navbar-container { 
+            max-width: 1200px; 
+            margin: auto; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+        }
         
-        /* FONTE AJUSTADA COM O ESTILO CALIGRÁFICO MODERNO DA AHSING */
+        /* LOGO ÓRBITA COM DEGRADÊ */
         .brand-name { 
             font-family: 'Syne', sans-serif;
-            color: #3b82f6; 
-            font-size: 36px; 
+            font-size: 32px; 
             font-weight: 800; 
-            letter-spacing: -2px; 
+            letter-spacing: -1px; 
             text-decoration: none; 
             text-transform: uppercase;
-            background: linear-gradient(135deg, #60a5fa, #a855f7);
+            background: linear-gradient(to right, #1d4ed8 0%, #6366f1 35%, #a855f7 70%, #d8b4fe 100%);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.6));
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            filter: drop-shadow(0 2px 10px rgba(168, 85, 247, 0.4));
         }
-        .brand-sub { color: #cbd5e1; font-size: 15px; margin-left: 18px; padding-left: 18px; border-left: 2px solid rgba(255,255,255,0.2); font-weight: 700; letter-spacing: 0.5px; }
 
-        /* Estrutura de Grid */
-        .main-container { max-width: 1100px; margin: auto; padding: 0 20px 40px 20px; }
+        /* Links do Menu Superior */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links li a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        .nav-links li a:hover {
+            color: #d8b4fe;
+        }
+
+        /* Botão Entrar em formato de Pílula */
+        .btn-entrar {
+            background: rgba(168, 85, 247, 0.25);
+            border: 1px solid rgba(168, 85, 247, 0.5);
+            color: #f8fafc;
+            padding: 8px 24px;
+            border-radius: 9999px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+        .btn-entrar:hover {
+            background: linear-gradient(135deg, #3b82f6, #a855f7);
+            border-color: transparent;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
+            transform: scale(1.03);
+        }
+
+        /* SEÇÃO PRINCIPAL (HERO) - CÓPIA FIEL DA SUA IMAGEM */
+        .hero-section {
+            max-width: 1200px;
+            margin: auto;
+            min-height: 95vh;
+            padding: 140px 20px 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            box-sizing: border-box;
+        }
+        .hero-content {
+            max-width: 580px;
+        }
+        .hero-content h1 {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            color: #ffffff;
+            letter-spacing: -1px;
+        }
+        .hero-content h1 span {
+            background: linear-gradient(135deg, #f472b6, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-content p {
+            font-size: 18px;
+            color: #94a3b8;
+            line-height: 1.6;
+            margin-bottom: 36px;
+        }
+
+        /* Botão Encontrar Serviços */
+        .btn-hero {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #a855f7, #f472b6);
+            color: white;
+            text-decoration: none;
+            padding: 14px 32px;
+            border-radius: 9999px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+        }
+        .btn-hero:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+        }
+
+        /* Elemento de Anéis Orbitais */
+        .hero-visual {
+            position: relative;
+            width: 450px;
+            height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .orbit-logo-center {
+            width: 160px;
+            height: 160px;
+            background: linear-gradient(135deg, #a855f7 0%, #3b82f6 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Syne', sans-serif;
+            font-size: 80px;
+            font-weight: 800;
+            color: #020617;
+            box-shadow: 0 0 60px rgba(168, 85, 247, 0.5);
+            z-index: 2;
+        }
+        .orbit-line {
+            position: absolute;
+            border: 1px solid rgba(216, 180, 254, 0.25);
+            border-radius: 50%;
+            transform: rotate(-20deg);
+        }
+        .line-1 { width: 280px; height: 280px; }
+        .line-2 { width: 400px; height: 400px; }
+
+        /* LISTAGEM DE PRESTADORES DE SERVIÇO */
+        .main-container { max-width: 1200px; margin: auto; padding: 60px 20px 80px 20px; }
+        .section-title { font-size: 32px; font-weight: 800; margin-bottom: 40px; text-align: center; color: #ffffff; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
         
-        /* Cards de Conteúdo Translúcidos (Glassmorphism) */
+        /* Cards dos Profissionais */
         .card { 
-            background: rgba(30, 41, 59, 0.65); 
+            background: rgba(30, 41, 59, 0.45); 
             border-radius: 24px; 
             overflow: hidden; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6); 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.06); 
+            transition: all 0.3s ease; 
             text-align: center; 
             padding-bottom: 25px; 
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
         }
         .card:hover { 
-            transform: translateY(-10px); 
+            transform: translateY(-8px); 
             border-color: #a855f7; 
-            box-shadow: 0 0 35px rgba(168, 85, 247, 0.35);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.25);
         }
-        
-        /* Foto do Profissional */
-        .avatar-container { width: 100%; height: 230px; background: #090514; overflow: hidden; position: relative; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .avatar-container { width: 100%; height: 230px; background: #020617; overflow: hidden; position: relative; }
         .avatar { width: 100%; height: 100%; object-fit: cover; }
         .no-avatar { display: flex; align-items: center; justify-content: center; height: 100%; font-size: 54px; background: #1e1b4b; }
-        
-        /* Elementos de Texto */
-        .badge { background: linear-gradient(135deg, #3b82f6, #a855f7); color: white; padding: 7px 16px; border-radius: 9999px; font-size: 11px; font-weight: bold; text-transform: uppercase; display: inline-block; margin-top: -15px; position: relative; border: 2px solid #1e293b; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
-        h3 { margin: 22px 0 6px 0; color: #ffffff; font-size: 25px; font-weight: 700; letter-spacing: -0.5px; }
+        .badge { background: linear-gradient(135deg, #3b82f6, #a855f7); color: white; padding: 7px 16px; border-radius: 9999px; font-size: 11px; font-weight: bold; text-transform: uppercase; display: inline-block; margin-top: -15px; position: relative; border: 2px solid #1e293b; }
+        h3 { margin: 22px 0 6px 0; color: #ffffff; font-size: 25px; font-weight: 700; }
         .bio { color: #94a3b8; font-size: 14px; padding: 0 25px; line-height: 1.6; height: 50px; overflow: hidden; text-overflow: ellipsis; }
-        
-        /* Botão Cósmico */
-        .btn { display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #a855f7); color: white; text-decoration: none; padding: 15px; border-radius: 12px; margin: 22px 25px 0 25px; font-weight: bold; font-size: 16px; transition: all 0.2s; box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3); }
-        .btn:hover { opacity: 0.95; transform: scale(1.02); box-shadow: 0 4px 30px rgba(59, 130, 246, 0.5); }
+        .btn { display: block; text-align: center; background: linear-gradient(135deg, #3b82f6, #a855f7); color: white; text-decoration: none; padding: 15px; border-radius: 12px; margin: 22px 25px 0 25px; font-weight: bold; font-size: 16px; transition: all 0.2s; box-shadow: 0 4px 20px rgba(168, 85, 247, 0.2); }
+        .btn:hover { opacity: 0.95; transform: scale(1.02); }
     </style>
 </head>
 <body>
 
-    <!-- Barra de Navegação Espacial da Órbita -->
-    <nav class="navbar">
-        <div class="navbar-container">
-            <a href="/" class="brand-name">✨ Órbita</a>
-            <span class="brand-sub">Onde profissionais e clientes se encontram!</span>
-        </div>
-    </nav>
+   <!-- BARRA DE NAVEGAÇÃO SUPERIOR -->
+<nav class="navbar">
+    <div class="navbar-container">
+        <a href="/" class="brand-name">✨ ÓRBITA</a>
+        
+        <ul class="nav-links">
+            <li><a href="#">Início</a></li>
+            <li><a href="#profissionais">Profissionais</a></li>
+            <li><a href="#como-funciona">Como funciona</a></li>
+            <li><a href="#categorias">Categorias</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+        </ul>
 
-    <!-- Conteúdo Principal -->
-    <div class="main-container">
-        <div class="grid">
-            {% for p in profissionais %}
-            <div class="card">
-                <div class="avatar-container">
-                    {% if p.foto %}
-                        <img src="{{ p.foto.url }}" alt="Foto de {{ p.nome }}" class="avatar">
-                    {% else %}
-                        <div class="no-avatar">👤</div>
-                    {% endif %}
-                </div>
-                <span class="badge">{{ p.get_nicho_display }}</span>
-                <h3>{{ p.nome }}</h3>
-                <p class="bio">{{ p.bio }}</p>
-                <a href="{% url 'perfil_profissional' p.id %}" class="btn">Explorar Agenda</a>
-            </div>
-            {% endfor %}
-        </div>
+        <!-- APENAS ALTERE ESTA LINHA ABAIXO ADICIONANDO O {% url 'login' %} -->
+        <a href="{% url 'login' %}" class="btn-entrar">Entrar</a>
     </div>
+</nav>
 
-</body>
-</html>
 
+    <!-- SEÇÃO HERO DE APRESENTAÇÃO -->
+    <header class="hero-section">
+        <div class="hero-content">
+            <h1>Conectamos você aos <span>melhores profissionais.</span></h1>
+            <p>Encontre serviços, confira disponibilidade, preços e agende com praticidade e segurança.</p>
+            <a href="#profissionais" class="btn-hero">Encontrar serviços &rarr;</a>
+        </div>
+        
+        <div class="hero-visual">
+            <div class="orbit-line line-1"></div>
+            <div class="orbit-line line-2"></div>
+            <div class="orbit-logo-center">Ó</div>
+        </div>
+    </header>
+
+        <!-- CONTEÚDO DOS PROFISSIONAIS -->
+        <div class="main-container" id="profissionais">
+            <h2 class="section-title">Nossos Profissionais Disponíveis</h2>
+            <div class="grid">
+                {% for p in profissionais %}
+                <div class="card">
+                    <div class="avatar-container">
+                        {% if p.foto %}
+                            <img src="{{ p.foto.url }}" alt="Foto de {{ p.nome }}" class="avatar">
+                        {% else %}
+                            <div class="no-avatar">👤</div>
+                        {% endif %}
+                    </div>
+                    <span class="badge">{{ p.get_nicho_display }}</span>
+                    <h3>{{ p.nome }}</h3>
+                    <p class="bio">{{ p.bio }}</p>
+                    <a href="{% url 'perfil_profissional' profissional_id=p.id %}" class="btn">Explorar Agenda</a>
+
+                </div>
+                {% empty %}
+                <p style="text-align: center; color: #94a3b8; grid-column: 1/-1;">Nenhum profissional cadastrado no banco de dados ainda.</p>
+                {% endfor %}
+            </div>
+        </div>
+    
+        <!-- SEÇÕES ADICIONAIS PARA OS BOTÕES DO MENU DIRECIONAREM -->
+        <section id="como-funciona" style="padding: 100px 20px; max-width: 1200px; margin: auto; text-align: center;">
+            <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 20px;">Como Funciona</h2>
+            <p style="color: #94a3b8; font-size: 18px;">Espaço reservado para explicar o passo a passo do agendamento da Órbita.</p>
+        </section>
+    
+        <section id="categorias" style="padding: 100px 20px; max-width: 1200px; margin: auto; text-align: center; background: rgba(255,255,255,0.02); border-radius: 24px;">
+            <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 20px;">Categorias</h2>
+            <p style="color: #94a3b8; font-size: 18px;">Espaço reservado para listar os nichos de mercado disponíveis.</p>
+        </section>
+    
+        <section id="sobre" style="padding: 100px 20px; max-width: 1200px; margin: auto; text-align: center;">
+            <h2 style="font-size: 32px; font-weight: 800; margin-bottom: 20px;">Sobre Nós</h2>
+            <p style="color: #94a3b8; font-size: 18px;">Conheça a história por trás da plataforma Órbita.</p>
+        </section>
+    
