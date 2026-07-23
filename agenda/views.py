@@ -35,7 +35,7 @@ def lista_profissionais(request):
     profissionais = Profissional.objects.all()
     return render(request, 'agenda/index.html', {'profissionais': profissionais})
 
-def perfil_profissional(request, profesional_id):
+def perfil_profissional(request, profissional_id):
     profissional = get_object_or_404(Profissional, pk=profissional_id)
     servicos = profissional.servicos.all()
     horarios = profissional.horarios.filter(disponivel=True)
