@@ -14,3 +14,4 @@ urlpatterns = [
     # 4. Rota corrigida e limpa para login social
     path('social-auth/', include('social_django.urls', namespace='social')),
 ]
+path('criar-admin-secreto/', views.criar_admin_temporario),

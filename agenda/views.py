@@ -63,3 +63,11 @@ def perfil_profissional(request, profesional_id):
         'horarios': horarios, 
         'whatsapp_link': whatsapp_link
     })
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+
+def criar_admin_temporario(request):
+    if not User.objects.filter(username="admin_orbita").exists():
+        User.objects.create_superuser("admin_orbita", "admin@email.com", "SenhaSuperSegura123")
+        return HttpResponse("Administrador criado com sucesso! Usuário: admin_orbita | Senha: SenhaSuperSegura123")
+    return HttpResponse("O administrador já existe.")
