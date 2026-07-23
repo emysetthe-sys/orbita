@@ -3,10 +3,24 @@ from .models import Profissional, Servico, HorarioDisponivel
 import urllib.parse
 
 def home(request):
-    # Busca os profissionais e carrega a nova página inicial da Órbita
-    profissionais = Profissional.objects.all() 
-    # AJUSTADO: mudamos de professionals para profissionais no final da linha abaixo
+    nicho_selecionado = request.GET.get('nicho')
+    
+    if nicho_selecionado:
+        # Tenta filtrar removendo diferenças de maiúsculas/minúsculas
+        profissionais = Profissional.objects.filter(nicho__icontains=nicho_selecionado)
+        
+        # Segurança: Se a busca vier vazia por erro de texto, mostra todo mundo
+        if not profissionais.exists():
+            profissionais = Profissional.objects.all()
+    else:
+        # Se não houver clique em categorias, lista todos normalmente
+        profissionais = Profissional.objects.all()
+        
     return render(request, 'agenda/index.html', {'profissionais': profissionais})
+
+        
+    return render(request, 'agenda/index.html', {'profissionais': profissionais})
+
 
 
 from django.shortcuts import render, redirect
@@ -38,7 +52,7 @@ def lista_profissionais(request):
 def perfil_profissional(request, profissional_id):
     profissional = get_object_or_404(Profissional, pk=profissional_id)
     servicos = profissional.servicos.all()
-    horarios = profissional.horarios.filter(disponivel=True)
+    horarios = profissional.horarios.filter(disponivel=True) # Mude para profissional se estiver errado
     whatsapp_link = None
     
     if request.method == 'POST':
