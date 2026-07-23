@@ -279,7 +279,8 @@
                     <span class="badge">{{ p.get_nicho_display }}</span>
                     <h3>{{ p.nome }}</h3>
                     <p class="bio">{{ p.bio }}</p>
-                    <a href="{% url 'perfil_profissional' profissional_id=p.id %}" class="btn">Explorar Agenda</a>
+                    <a href="{% url 'perfil_profissional' p.id %}" class="btn">Explorar Agenda</a>
+
 
                 </div>
                 {% empty %}
